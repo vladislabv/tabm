@@ -1793,7 +1793,7 @@ class TabM(nn.Module):
         if x_cat is not None:
             assert self.cat_module is not None, _INTERNAL_ERROR_MESSAGE
             x_.append(self.cat_module(x_cat))
-        x = torch.column_stack([x.flatten(1, -1) for x in x_])
+        x = torch.cat([x.flatten(1, -1) for x in x_], dim=1)  # column_stack -> cat for onnx
 
         if ndim == 3:
             # Unflatten the first dimension back to the original shape.
